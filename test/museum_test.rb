@@ -49,5 +49,32 @@ class MuseumTest < MiniTest::Test
     assert_equal expected, actual
   end
 
+  def test_it_can_return_names_of_patron_at_exhibit
+    @m.add_exhibit("Dead Sea Scrolls", 10)
+    @m.add_exhibit("Gems and Minerals", 0)
+    @bob.add_interest("Gems and Minerals")
+    @bob.add_interest("Dead Sea Scrolls")
+    @bob.add_interest("Imax")
+    @sally.add_interest("Dead Sea Scrolls")
+    @m.admit(@bob)
+    @m.admit(@sally)
+    expected = ["Bob", "Sally"]
+    actual = @m.patrons_of("Dead Sea Scrolls")
+    assert_equal expected, actual
+  end
+
+  def test_it_can_return_sorted_exhibits_by_attendees
+    @m.add_exhibit("Dead Sea Scrolls", 10)
+    @m.add_exhibit("Gems and Minerals", 0)
+    @bob.add_interest("Gems and Minerals")
+    @bob.add_interest("Dead Sea Scrolls")
+    @bob.add_interest("Imax")
+    @sally.add_interest("Dead Sea Scrolls")
+    @m.admit(@bob)
+    @m.admit(@sally)
+    expected = ["Dead Sea Scrolls", "Gems and Minerals"]
+    actual = @m.exhibits_by_attendees
+    assert_equal expected, actual
+  end
 
 end
