@@ -42,7 +42,9 @@ class Museum
   end
 
   def exhibits_by_attendees
-    
+    sorted_array = @exhibit_attendee_count.to_a.sort_by { |count| count[0] }
+    final_sorted_array = sorted_array.map { |name| name[0] }
+    return final_sorted_array
   end
 
   def increase_attendee_count(exhibit)
@@ -51,4 +53,6 @@ class Museum
     elsif @exhibit_attendee_count.keys.include?(exhibit)
       @exhibit_attendee_count[exhibit] += 1
     end
+  end
+
 end
