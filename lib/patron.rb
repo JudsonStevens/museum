@@ -11,7 +11,4 @@ class Patron
     @interests << interest
   end
 
-
-
-
 end
