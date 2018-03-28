@@ -55,4 +55,13 @@ class Museum
     end
   end
 
+  def remove_unpopular_exhibits(threshold)
+    @exhibit_attendee_count.each_key do |name|
+      if @exhibit_attendee_count[name] < threshold
+        @exhibits.delete(name)
+      end
+    end
+  end
+
+
 end

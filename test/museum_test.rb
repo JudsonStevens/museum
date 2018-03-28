@@ -77,4 +77,19 @@ class MuseumTest < MiniTest::Test
     assert_equal expected, actual
   end
 
+  def test_it_can_remove_exhibits
+    @m.add_exhibit("Dead Sea Scrolls", 10)
+    @m.add_exhibit("Gems and Minerals", 0)
+    @bob.add_interest("Gems and Minerals")
+    @bob.add_interest("Dead Sea Scrolls")
+    @bob.add_interest("Imax")
+    @sally.add_interest("Dead Sea Scrolls")
+    @m.admit(@bob)
+    @m.admit(@sally)
+    @m.remove_unpopular_exhibits(2)
+    expected = {"Dead Sea Scrolls" => 10}
+    actual = @m.exhibits
+    assert_equal expected, actual
+  end
+
 end
