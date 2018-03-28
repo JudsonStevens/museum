@@ -2,11 +2,14 @@ require "minitest"
 require "minitest/emoji"
 require "minitest/autorun"
 require_relative "../lib/museum.rb"
+require_relative "../lib/patron.rb"
 
 class MuseumTest < MiniTest::Test
 
   def setup
     @m = Museum.new("Denver Museum of Nature and Science")
+    @bob = Patron.new("Bob")
+    @sally = Patron.new("Sally")
   end
 
   def test_it_exists
@@ -22,6 +25,27 @@ class MuseumTest < MiniTest::Test
   def test_it_starts_with_no_exhibits
     expected = {}
     actual = @m.exhibits
+    assert_equal expected, actual
+  end
+
+  def test_it_can_add_exhibit_with_cost
+    @m.add_exhibit("Dead Sea Scrolls", 10)
+    expected = {"Dead Sea Scrolls" => 10}
+    actual = @m.exhibits
+    assert_equal expected, actual
+  end
+
+  def test_it_can_give_correct_revenue
+    @m.add_exhibit("Dead Sea Scrolls", 10)
+    @m.add_exhibit("Gems and Minerals", 0)
+    @bob.add_interest("Gems and Minerals")
+    @bob.add_interest("Dead Sea Scrolls")
+    @bob.add_interest("Imax")
+    @sally.add_interest("Dead Sea Scrolls")
+    @m.admit(@bob)
+    @m.admit(@sally)
+    expected = 40
+    actual = @m.revenue
     assert_equal expected, actual
   end
 
